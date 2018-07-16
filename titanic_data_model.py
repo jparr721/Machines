@@ -6,6 +6,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import Imputer
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
+data_directory = '../data/titanic'
+
 def score_dataset(train_x, test_x, train_y, test_y):
     model = RandomForestRegressor(50)
     model.fit(train_x, train_y)
@@ -20,8 +22,8 @@ def get_mae(X, y):
 
 if __name__ == '__main__':
     imputer = Imputer()
-    titanic_raw_train = pd.read_csv('../input/train.csv')
-    titanic_raw_test = pd.read_csv('../input/test.csv')
+    titanic_raw_train = pd.read_csv('{}/train.csv'.format(data_directory))
+    titanic_raw_test = pd.read_csv('{}/test.csv'.format(data_directory))
 
     titanic_raw_train_new = titanic_raw_train.copy()
     titanic_raw_test_new = titanic_raw_test.copy()
