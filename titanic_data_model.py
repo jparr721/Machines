@@ -6,13 +6,15 @@ from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import Imputer
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
-data_directory = '../data/titanic'
+data_directory = './data/titanic'
+
 
 def score_dataset(train_x, test_x, train_y, test_y):
     model = RandomForestRegressor(50)
     model.fit(train_x, train_y)
     predictions = model.predict(test_x)
     return mean_absolute_error(test_y, predictions)
+
 
 def get_mae(X, y):
     return -1 * cross_val_score(RandomForestRegressor(50),
@@ -31,7 +33,7 @@ if __name__ == '__main__':
     target = titanic_raw_train.Survived
 
     cols_with_missing = [col for col in titanic_raw_train.columns
-                        if titanic_raw_train[col].isnull().any()]
+                         if titanic_raw_train[col].isnull().any()]
 
     # Impute our missing columns
     for col in cols_with_missing:
@@ -54,7 +56,8 @@ if __name__ == '__main__':
     one_hot_encoded_training_predictors = pd.get_dummies(train_predictors)
     one_hot_encoded_test_predictors = pd.get_dummies(test_predictors)
 
-    predictors_without_categoricals = train_predictors.select_dtypes(exclude=['object'])
+    predictors_without_categoricals = train_predictors.select_dtypes(
+            exclude=['object'])
 
     final_train, final_test = one_hot_encoded_training_predictors.align(
                                 one_hot_encoded_test_predictors,
