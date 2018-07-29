@@ -4,6 +4,7 @@ import numpy as np
 from perceptron import Perceptron
 from matplotlib.colors import ListedColormap
 
+
 def plot_decision_regions(X, y, classifier, resolution=0.02):
     # set up marker generator and color map
     markers = ('s', 'x', 'o', '^', 'v')
@@ -60,13 +61,13 @@ and fit it to a graph to show the number of iterations
 """
 ppn = Perceptron(eta=0.1, n_iter=10)
 ppn.fit(X, y)
-plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
-plt.xlabel('Epochs (iterations)')
-plt.ylabel('Number of updates')
-plt.show()
-
-# plot_decision_regions(X, y, classifier=ppn)
-# plt.xlabel('sepal length [cm]')
-# plt.ylabel('petal length [cm]')
-# plt.legend(loc='upper left')
+# plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
+# plt.xlabel('Epochs (iterations)')
+# plt.ylabel('Number of updates')
 # plt.show()
+
+plot_decision_regions(X, y, classifier=ppn)
+plt.xlabel('sepal length [cm]')
+plt.ylabel('petal length [cm]')
+plt.legend(loc='upper left')
+plt.show()
