@@ -3,6 +3,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Perceptron
 from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 import numpy as np
@@ -43,45 +45,126 @@ def plot_decision_regions(X, y, classifier, test_idx=None,
                     s=100, label='Test Set')
 
 
-# For feature scaling
-sc = StandardScaler()
+def sk_perceptron():
+    # For feature scaling
+    sc = StandardScaler()
 
-iris = datasets.load_iris()
-X = iris.data[:, [2, 3]]
-y = iris.target
+    iris = datasets.load_iris()
+    X = iris.data[:, [2, 3]]
+    y = iris.target
 
-# Split 30% test, 70% train, random seed is 1.
-# We stratify to keep data proportionate
-X_train, X_test, y_train, y_test = train_test_split(X, y,
-                                                    test_size=0.3,
-                                                    random_state=1,
-                                                    stratify=y)
+    # Split 30% test, 70% train, random seed is 1.
+    # We stratify to keep data proportionate
+    X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                        test_size=0.3,
+                                                        random_state=1,
+                                                        stratify=y)
 
-# Esitmate the mean and the standard deviation of each feature
-sc.fit(X_train)
+    # Esitmate the mean and the standard deviation of each feature
+    sc.fit(X_train)
 
-# Standardize the inputs via standardization
-X_train_std = sc.transform(X_train)
-X_test_std = sc.transform(X_test)
+    # Standardize the inputs via standardization
+    X_train_std = sc.transform(X_train)
+    X_test_std = sc.transform(X_test)
 
-# Init a new perceptron 40 epochs and an alpha of 0.1
-ppn = Perceptron(max_iter=40, eta0=0.1, random_state=1)
-ppn.fit(X_train_std, y_train)
+    # Init a new perceptron 40 epochs and an alpha of 0.1
+    ppn = Perceptron(max_iter=40, eta0=0.1, random_state=1)
+    ppn.fit(X_train_std, y_train)
 
-y_pred = ppn.predict(X_test_std)
-print('Misclassified samples: {}'.format((y_test != y_pred).sum()))
+    y_pred = ppn.predict(X_test_std)
+    print('Misclassified samples: {}'.format((y_test != y_pred).sum()))
 
-print('Accuracy of results: {}'.format(accuracy_score(y_test, y_pred)))
-print('Test accuracy: {}'.format(ppn.score(X_test_std, y_test)))
+    print('Accuracy of results: {}'.format(accuracy_score(y_test, y_pred)))
+    print('Test accuracy: {}'.format(ppn.score(X_test_std, y_test)))
 
-X_combined_std = np.vstack((X_train_std, X_test_std))
-y_combined = np.hstack((y_train, y_test))
+    X_combined_std = np.vstack((X_train_std, X_test_std))
+    y_combined = np.hstack((y_train, y_test))
 
-plot_decision_regions(X_combined_std,
-                      y_combined,
-                      ppn,
-                      range(105, 150))
-plt.xlabel('Petal Length [Standardized]')
-plt.ylabel('Petal Width [Standardized]')
-plt.legend(loc='upper left')
-plt.show()
+    plot_decision_regions(X_combined_std,
+                          y_combined,
+                          ppn,
+                          range(105, 150))
+    plt.xlabel('Petal Length [Standardized]')
+    plt.ylabel('Petal Width [Standardized]')
+    plt.legend(loc='upper left')
+    plt.show()
+
+
+def sk_logistic_regression():
+    # For feature scaling
+    sc = StandardScaler()
+
+    iris = datasets.load_iris()
+    X = iris.data[:, [2, 3]]
+    y = iris.target
+
+    # Split 30% test, 70% train, random seed is 1.
+    # We stratify to keep data proportionate
+    X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                        test_size=0.3,
+                                                        random_state=1,
+                                                        stratify=y)
+
+    # Esitmate the mean and the standard deviation of each feature
+    sc.fit(X_train)
+
+    # Standardize the inputs via standardization
+    X_train_std = sc.transform(X_train)
+    X_test_std = sc.transform(X_test)
+
+    X_combined_std = np.vstack((X_train_std, X_test_std))
+    y_combined = np.hstack((y_train, y_test))
+
+    lr = LogisticRegression(C=100.0, random_state=1)
+
+    lr.fit(X_train_std, y_train)
+
+    plot_decision_regions(X_combined_std,
+                          y_combined,
+                          lr,
+                          range(105, 150))
+    plt.xlabel('Petal length')
+    plt.ylabel('Petal width')
+    plt.legend(loc='upper left')
+    plt.show()
+
+
+def sk_svm():
+    svm = SVC(kernel='linear', C=1.0, random_state=1)
+    # For feature scaling
+    sc = StandardScaler()
+
+    iris = datasets.load_iris()
+    X = iris.data[:, [2, 3]]
+    y = iris.target
+
+    # Split 30% test, 70% train, random seed is 1.
+    # We stratify to keep data proportionate
+    X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                        test_size=0.3,
+                                                        random_state=1,
+                                                        stratify=y)
+
+    # Esitmate the mean and the standard deviation of each feature
+    sc.fit(X_train)
+
+    # Standardize the inputs via standardization
+    X_train_std = sc.transform(X_train)
+    X_test_std = sc.transform(X_test)
+
+    X_combined_std = np.vstack((X_train_std, X_test_std))
+    y_combined = np.hstack((y_train, y_test))
+
+    svm.fit(X_train_std, y_train)
+    plot_decision_regions(X_combined_std,
+                          y_combined,
+                          svm,
+                          range(105, 150))
+    plt.xlabel('Petal length')
+    plt.ylabel('Petal width')
+    plt.legend(loc='upper left')
+    plt.show()
+
+
+# sk_logistic_regression()
+sk_svm()

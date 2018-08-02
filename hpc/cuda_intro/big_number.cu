@@ -4,28 +4,30 @@
 
 __global__
 void add(int n, float* x, float* y) {
-  for (int i = 0; i < n; i++)
+  int index = blockIdx.x * blockDim.x + threadIdx.x;
+  int stride = blockDim.x * gridDim.x;
+
+  for (int i = index; i < n; i+= stride)
     y[i] = x[i] + y[i];
 }
 
 int main(void) {
-  int N = 1 << 20; // Bit shift up to 1m elements
+
+	int N = 1<<20;
   float *x, *y;
+  int blockSize = 256;
+  int numBlocks = (N + blockSize - 1) / blockSize;
 
-  //Allocate unified memory
+  // Allocate Unified Memory – accessible from CPU or GPU
   cudaMallocManaged(&x, N*sizeof(float));
-  cudaMallocManaged(&y, N*sizeof(float)):
-
-  /* float* x = new float[N]; */
-  /* float* y = new float[N]; */
+  cudaMallocManaged(&y, N*sizeof(float));
 
   for (int i = 0; i < N; i++) {
     x[i] = 1.0f;
     y[i] = 2.0f;
   }
 
-  /* add(N, x, y); */
-  add <<<1, 1>>>(N, x, y);
+  add <<<numBlocks, blockSize>>>(N, x, y);
 
   // Wait for GPU to finish
   cudaDeviceSynchronize();
@@ -39,8 +41,6 @@ int main(void) {
   // Free memory
   cudaFree(x);
   cudaFree(y);
-  /* delete [] x; */
-  /* delete [] y; */
 
   return 0;
 }
