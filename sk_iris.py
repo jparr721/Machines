@@ -5,9 +5,37 @@ from sklearn.linear_model import Perceptron
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 import numpy as np
+
+
+
+"""Arbitrary Data Loading"""
+# For feature scaling
+sc = StandardScaler()
+
+iris = datasets.load_iris()
+X = iris.data[:, [2, 3]]
+y = iris.target
+
+# Split 30% test, 70% train, random seed is 1.
+# We stratify to keep data proportionate
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                    test_size=0.3,
+                                                    random_state=1,
+                                                    stratify=y)
+
+# Esitmate the mean and the standard deviation of each feature
+sc.fit(X_train)
+
+# Standardize the inputs via standardization
+X_train_std = sc.transform(X_train)
+X_test_std = sc.transform(X_test)
+
+X_combined_std = np.vstack((X_train_std, X_test_std))
+y_combined = np.hstack((y_train, y_test))
 
 
 def plot_decision_regions(X, y, classifier, test_idx=None,
@@ -166,5 +194,23 @@ def sk_svm():
     plt.show()
 
 
+def sk_decision_tree():
+    """This sample overifts for depth > 5"""
+    tree = DecisionTreeClassifier(criterion='gini',
+                                  max_depth=3,
+                                  random_state=1)
+    tree.fit(X_train, y_train)
+    X_combined = np.vstack((X_train, X_test))
+    plot_decision_regions(X_combined,
+                          y_combined,
+                          classifier=tree,
+                          test_idx=range(105, 150))
+    plt.xlabel('Petal Length')
+    plt.ylabel('Petal Width')
+    plt.legend(loc='upper left')
+    plt.show()
+
+
 # sk_logistic_regression()
-sk_svm()
+# sk_svm()
+sk_decision_tree()
