@@ -6,10 +6,11 @@ from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 import numpy as np
-
 
 
 """Arbitrary Data Loading"""
@@ -211,6 +212,46 @@ def sk_decision_tree():
     plt.show()
 
 
+def sk_random_forest_classifier():
+    """
+    n_esitmators -- The number of decision trees,
+    criterion -- The impurity classifier
+    n_jobs -- Parallelize the model training (for larger sets)
+    corresponds to # of cores on system
+    """
+    forest = RandomForestClassifier(criterion='gini',
+                                    n_estimators=25,
+                                    random_state=1,
+                                    n_jobs=6)
+    forest.fit(X_train, y_train)
+    X_combined = np.vstack((X_train, X_test))
+    plot_decision_regions(X_combined,
+                          y_combined,
+                          classifier=forest,
+                          test_idx=range(105, 150))
+    plt.xlabel('Petal Length')
+    plt.ylabel('Petal Width')
+    plt.legend(loc='upper left')
+    plt.show()
+
+
+def sk_k_nearest_neighbors():
+    knn = KNeighborsClassifier(n_neighbors=5,
+                               p=2,
+                               metric='minkowski')
+    knn.fit(X_train_std, y_train)
+    plot_decision_regions(X_combined_std,
+                          y_combined,
+                          classifier=knn,
+                          test_idx=range(105, 150))
+    plt.xlabel('Petal Length')
+    plt.ylabel('Petal Width')
+    plt.legend(loc='upper left')
+    plt.show()
+
+
 # sk_logistic_regression()
 # sk_svm()
-sk_decision_tree()
+# sk_decision_tree()
+# sk_random_forest_classifier()
+sk_k_nearest_neighbors()
