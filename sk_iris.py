@@ -251,7 +251,7 @@ def sk_k_nearest_neighbors():
 
 
 # sk_logistic_regression()
-# sk_svm()
+sk_svm()
 # sk_decision_tree()
 # sk_random_forest_classifier()
-sk_k_nearest_neighbors()
+# sk_k_nearest_neighbors()
