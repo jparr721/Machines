@@ -1,34 +1,68 @@
-#include <cstdlib>
-#include <cmath>
 #include "statistically_random_subsets.h"
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
+#include <random>
 
 namespace stats {
-  std::vector<int> sort(std::vector<int> unsorted_vector) {
+std::vector<int> StatisticallyRandomSubsets::generate(int k, const std::vector<int> & n) {
+  std::vector<int> random_list(n);
+  std::cout << &random_list[k] << std::endl;
+  std::random_shuffle(&random_list[0], &random_list[k]);
 
-  }
+  /* for (const auto & val : random_list) { */
+  /*   std::cout << val << std::endl; */
+  /* } */
 
-  std::vector<int> StatisticallyRandomSubsets::generate(int k, std::vector<int> n) {
-    int vector_length = n.size();
+  /* int vector_length = n.size(); */
 
-    for (int i = 0; i < k; ++i) {
-      const int width = vector_length -i;
-      const int random_index = width * rand() % k;
+  /* std::default_random_engine generator; */
+  /* std::uniform_int_distribution<int> distribution(0, vector_length); */
 
-      int key = n[i];
-      int swap = n[random_index + i];
+  /* int width; */
+  /* int random_index; */
 
-      n[random_index] = key;
-      n[i] = swap;
-    }
+  /* for (int i = 0; i < k; ++i) { */
+  /*   // Random number from 0 to n.size() */
+  /*   random_index = distribution(generator); */
+  /*   width = vector_length - i; */
 
-    // If we don't care about preserving the list
-    // n.resize(50);
+  /*   int key = n[i]; */
+  /*   int swap = n[random_index + i]; */
 
-    std::vector<int> random_list();
+  /*   n[random_index] = key; */
+  /*   n[i] = swap; */
+  /* } */
 
-    // Load the data into the vector
-    std::vector<int> sub(&n[0], &n[50]);
+  /* // If we don't care about preserving the list */
+  /* // n.resize(50); */
 
-    return random_list();
-  }
+  /* std::vector<int> random_list(); */
+
+  /* // Load the data into the vector */
+  /* std::vector<int> sub(&n[0], &n[50]); */
+
+  return random_list;
+}
+
 } // namespace stats
+
+int main() {
+  stats::StatisticallyRandomSubsets srs;
+
+  std::vector<int> n;
+  n.reserve(500);
+  int k = 50;
+  for (int i = 0; i < 500; ++i) {
+    n.push_back(i);
+  }
+
+  std::vector<int> output = srs.generate(k, n);
+
+  for (const auto & val : output) {
+    std::cout << val << std::endl;
+  }
+
+  return 0;
+}
