@@ -3,45 +3,50 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <iterator>
 #include <random>
 
 namespace stats {
+int StatisticallyRandomSubsets::partition(std::vector<int> arr, int low, int high) {
+  int pivot = arr[high];
+
+  // Our artifical "wall"
+  int i = low - 1;
+
+  for (int j = low; j < high; ++j) {
+    if (arr[j] <= pivot) {
+      ++i;
+      std::iter_swap(arr.begin() + i, arr.begin() + j);
+    }
+  }
+
+  std::iter_swap(arr.begin() + (i + 1), arr.begin() + high);
+
+  return i + 1;
+}
+
+std::vector<int> StatisticallyRandomSubsets::sort(const std::vector<int> & unsorted_vector, int low, int high) {
+  if (low < high) {
+    int p = partition(unsorted_vector, low, high);
+
+    sort(unsorted_vector, low, p - 1);
+    sort(unsorted_vector, p + 1, high);
+  }
+
+  return unsorted_vector;
+}
+
 std::vector<int> StatisticallyRandomSubsets::generate(int k, const std::vector<int> & n) {
   std::vector<int> random_list(n);
-  std::cout << &random_list[k] << std::endl;
-  std::random_shuffle(&random_list[0], &random_list[k]);
+  std::random_device rd;
 
-  /* for (const auto & val : random_list) { */
-  /*   std::cout << val << std::endl; */
-  /* } */
+  // Mersaine Twister Pseudo random number genrator
+  // This is an optimized random number generator in the stl
+  std::mt19937 g(rd());
+  auto it = random_list.begin();
 
-  /* int vector_length = n.size(); */
-
-  /* std::default_random_engine generator; */
-  /* std::uniform_int_distribution<int> distribution(0, vector_length); */
-
-  /* int width; */
-  /* int random_index; */
-
-  /* for (int i = 0; i < k; ++i) { */
-  /*   // Random number from 0 to n.size() */
-  /*   random_index = distribution(generator); */
-  /*   width = vector_length - i; */
-
-  /*   int key = n[i]; */
-  /*   int swap = n[random_index + i]; */
-
-  /*   n[random_index] = key; */
-  /*   n[i] = swap; */
-  /* } */
-
-  /* // If we don't care about preserving the list */
-  /* // n.resize(50); */
-
-  /* std::vector<int> random_list(); */
-
-  /* // Load the data into the vector */
-  /* std::vector<int> sub(&n[0], &n[50]); */
+  std::shuffle(it, it + k, g);
+  random_list.resize(k);
 
   return random_list;
 }
@@ -58,11 +63,9 @@ int main() {
     n.push_back(i);
   }
 
-  std::vector<int> output = srs.generate(k, n);
+  const std::vector<int> output = srs.sort(srs.generate(k, n), 0, n.size());
 
-  for (const auto & val : output) {
-    std::cout << val << std::endl;
-  }
+  std::copy(output.begin(), output.end(), std::ostream_iterator<int>(std::cout, " "));
 
   return 0;
 }
