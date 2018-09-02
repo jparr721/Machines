@@ -7,15 +7,15 @@
 #include <random>
 
 namespace stats {
-int StatisticallyRandomSubsets::partition(std::vector<int> arr, int low, int high) {
+int StatisticallyRandomSubsets::partition(std::vector<int> & arr, int low, int high) {
   int pivot = arr[high];
 
   // Our artifical "wall"
   int i = low - 1;
 
-  for (int j = low; j < high; ++j) {
+  for (int j = low; j <= high - 1; ++j) {
     if (arr[j] <= pivot) {
-      ++i;
+      i++;
       std::iter_swap(arr.begin() + i, arr.begin() + j);
     }
   }
@@ -25,7 +25,7 @@ int StatisticallyRandomSubsets::partition(std::vector<int> arr, int low, int hig
   return i + 1;
 }
 
-std::vector<int> StatisticallyRandomSubsets::sort(const std::vector<int> & unsorted_vector, int low, int high) {
+std::vector<int> StatisticallyRandomSubsets::sort(std::vector<int> & unsorted_vector, int low, int high) {
   if (low < high) {
     int p = partition(unsorted_vector, low, high);
 
@@ -43,9 +43,8 @@ std::vector<int> StatisticallyRandomSubsets::generate(int k, const std::vector<i
   // Mersaine Twister Pseudo random number genrator
   // This is an optimized random number generator in the stl
   std::mt19937 g(rd());
-  auto it = random_list.begin();
 
-  std::shuffle(it, it + k, g);
+  std::shuffle(random_list.begin(), random_list.end(), g);
   random_list.resize(k);
 
   return random_list;
@@ -63,7 +62,8 @@ int main() {
     n.push_back(i);
   }
 
-  const std::vector<int> output = srs.sort(srs.generate(k, n), 0, n.size());
+  std::vector<int> output = srs.generate(k, n);
+  output = srs.sort(output, 0, output.size() - 1);
 
   std::copy(output.begin(), output.end(), std::ostream_iterator<int>(std::cout, " "));
 
