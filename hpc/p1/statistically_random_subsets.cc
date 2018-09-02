@@ -1,6 +1,6 @@
 #include "statistically_random_subsets.h"
 #include <algorithm>
-#include <cmath>
+#include <chrono>
 #include <cstdlib>
 #include <iostream>
 #include <iterator>
@@ -49,7 +49,6 @@ std::vector<int> StatisticallyRandomSubsets::generate(int k, const std::vector<i
 
   return random_list;
 }
-
 } // namespace stats
 
 int main() {
@@ -62,10 +61,20 @@ int main() {
     n.push_back(i);
   }
 
+  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
   std::vector<int> output = srs.generate(k, n);
-  output = srs.sort(output, 0, output.size() - 1);
+  // Custom sort takes ~30ms longer
+  /* output = srs.sort(output, 0, output.size() - 1); */
+
+  // Faster sort option
+  std::sort(output.begin(), output.end());
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
   std::copy(output.begin(), output.end(), std::ostream_iterator<int>(std::cout, " "));
+  std::cout << "\n\nRunning Times" << std::endl;
+  std::cout << "-----------------------------------------" << std::endl;
+  std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "ms" << std::endl;
+  std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "ns" << std::endl;
 
   return 0;
 }
