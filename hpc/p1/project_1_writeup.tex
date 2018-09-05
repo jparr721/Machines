@@ -21,6 +21,7 @@ My code exhibited the following run time performance:
 
 \section{Code}
 My full source code is as follows: 
+
 \begin{verbatim}
 #include "statistically_random_subsets.h"
 #include <algorithm>
@@ -31,7 +32,8 @@ My full source code is as follows:
 #include <random>
 
 namespace stats {
-int StatisticallyRandomSubsets::partition(std::vector<int> & arr, int low, int high) {
+int StatisticallyRandomSubsets::partition(std::vector<int> & arr, 
+			int low, int high) {
   int pivot = arr[high];
 
   // Our artifical "wall"
@@ -49,7 +51,8 @@ int StatisticallyRandomSubsets::partition(std::vector<int> & arr, int low, int h
   return i + 1;
 }
 
-std::vector<int> StatisticallyRandomSubsets::sort(std::vector<int> & unsorted_vector, int low, int high) {
+std::vector<int> StatisticallyRandomSubsets::sort(
+			std::vector<int> & unsorted_vector, int low, int high) {
   if (low < high) {
     int p = partition(unsorted_vector, low, high);
 
@@ -60,7 +63,8 @@ std::vector<int> StatisticallyRandomSubsets::sort(std::vector<int> & unsorted_ve
   return unsorted_vector;
 }
 
-std::vector<int> StatisticallyRandomSubsets::generate(int k, const std::vector<int> & n) {
+std::vector<int> StatisticallyRandomSubsets::generate(int k, 
+			 const std::vector<int> & n) {
   std::vector<int> random_list(n);
   std::random_device rd;
 
@@ -94,18 +98,24 @@ int main() {
   std::sort(output.begin(), output.end());
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-  std::copy(output.begin(), output.end(), std::ostream_iterator<int>(std::cout, " "));
+  std::copy(output.begin(), output.end(), 
+  		std::ostream_iterator<int>(std::cout, " "));
   std::cout << "\n\nRunning Times" << std::endl;
   std::cout << "-----------------------------------------" << std::endl;
-  std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "ms" << std::endl;
-  std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "ns" << std::endl;
+  std::cout << "Time difference = " << 
+  			std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() 
+  			<< "ms" << std::endl;
+  std::cout << "Time difference = " << 
+  			std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() 
+  			<< "ns" << std::endl;
 
   return 0;
 }
 \end{verbatim}
 
 \section{Conclusion}
-This project showed me a great deal about the basics of run time performance and how to do performance tuning to squeeze every ounce of speed out of a particular set of functions I have written. I really enjoyed learning what I did on this lighter project and am eager to tackle new ones.
+This project showed me a great deal about the basics of run time performance and how to do performance tuning to squeeze every ounce of speed out of a particular set of functions I have written.
+ I really enjoyed learning what I did on this lighter project and am eager to tackle new ones.
 
 
 \end{document}

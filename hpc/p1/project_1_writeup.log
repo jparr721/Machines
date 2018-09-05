@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.7.7)  2 SEP 2018 15:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.5)  5 SEP 2018 11:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -54,25 +54,62 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 18.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./project_1_writeup.a
-ux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (13.6647pt too wide) in paragraph at lines 114--114
+[]\OT1/cmtt/m/n/10.95 int StatisticallyRandomSubsets::partition(std::vector<int
+> & arr,[] 
+ []
+
+[2]
+Overfull \hbox (105.6437pt too wide) in paragraph at lines 114--114
+[]  \OT1/cmtt/m/n/10.95 std::chrono::steady_clock::time_point begin = std::chro
+no::steady_clock::now();[] 
+ []
+
+
+Overfull \hbox (94.14633pt too wide) in paragraph at lines 114--114
+[]  \OT1/cmtt/m/n/10.95 std::chrono::steady_clock::time_point end = std::chrono
+::steady_clock::now();[] 
+ []
+
+[3]
+Overfull \hbox (53.90552pt too wide) in paragraph at lines 114--114
+[]  \OT1/cmtt/m/n/10.95 std::cout << "-----------------------------------------
+" << std::endl;[] 
+ []
+
+
+Overfull \hbox (82.64896pt too wide) in paragraph at lines 114--114
+[]   \OT1/cmtt/m/n/10.95 std::chrono::duration_cast<std::chrono::microseconds>(
+end - begin).count()[] 
+ []
+
+
+Overfull \hbox (82.64896pt too wide) in paragraph at lines 114--114
+[]   \OT1/cmtt/m/n/10.95 std::chrono::duration_cast<std::chrono::nanoseconds> (
+end - begin).count()[] 
+ []
+
+[4] (./project_1_writeup.aux) ) 
 Here is how much of TeX's memory you used:
- 247 strings out of 492649
- 2836 string characters out of 6135779
- 61909 words of memory out of 5000000
- 4203 multiletter control sequences out of 15000+600000
- 8196 words of font info for 29 fonts, out of 8000000 for 9000
+ 249 strings out of 492649
+ 2860 string characters out of 6135779
+ 62909 words of memory out of 5000000
+ 4204 multiletter control sequences out of 15000+600000
+ 8364 words of font info for 30 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 21i,6n,19p,793b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sha
-re/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on project_1_writeup.pdf (2 pages, 68790 bytes).
+ 21i,6n,19p,793b,246s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+tt10.pfb>
+Output written on project_1_writeup.pdf (4 pages, 89105 bytes).
 PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
- 24 compressed objects within 1 object stream
+ 45 PDF objects out of 1000 (max. 8388607)
+ 31 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
