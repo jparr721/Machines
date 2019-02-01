@@ -10,7 +10,8 @@ TEST_CHUNK_SIZE = 10 ** 3
 TRAIN_CHUNK_SIZE = 10 ** 4
 scaler = StandardScaler()
 # Radial basis function kernel since we are doing multi class
-support_vector_machine = svm.SVC(kernel='rbf', gamma='scale', decision_function_shape='ovo')
+support_vector_machine = svm.SVC(
+    kernel='rbf', gamma='scale', decision_function_shape='ovo')
     
 def compute_average_score(scores: list):
     total = 0
